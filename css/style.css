@@ -1,0 +1,14 @@
+
+
+.filtro {
+    text-align: center;
+    margin: 10px;
+    border: 1px solid darkblue;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.flex {
+    display: flex;
+    flex-direction: row;
+}
