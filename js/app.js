@@ -63,6 +63,15 @@ const pintarPokemon = pokemon => {
     const fragment = document.createDocumentFragment()
     pokemonBuscado.innerHTML = ''
     clone.querySelector('.card-body-img').setAttribute('src', pokemon.imgCvg)
+    clone.querySelector('.card-body-title')
+
+    .innerHTML = `${pokemon.nombre}<span>${pokemon.hp}hp</span>`
+
+    clone.querySelector('.card-body-text').textContent = pokemon.experiencia +"exp"
+
+    clone.querySelectorAll('.card-footer-social h3')[0].textContent = pokemon.ataque + "K"
+    clone.querySelectorAll('.card-footer-social h3')[1].textContent = pokemon.especial + "K"
+    clone.querySelectorAll('.card-footer-social h3')[2].textContent = pokemon.defensa + "K"
 
     fragment.appendChild(clone)
     pokemonBuscado.appendChild(fragment)
@@ -84,17 +93,45 @@ const fetchPokemones = (total) => {
         })
 }
 
-const pintarPokemones = () => {
+const pintarPokemones = (array) => {
+    console.log(array)
+    const pinta = array||pokemones
+    let i=-1
+    if(array){
+        i=pokemones.findIndex(x=>x.name===array[0].name)
+        i++
+    }
+    console.log(pokemones)
     lista.innerHTML = ''
-    pokemones.forEach((item, index) => {
+    pinta.forEach((item, index) => {
         //console.log(item)
         infoPokemon.querySelectorAll('p')[0].textContent = item.name
         infoPokemon.querySelectorAll('p')[1].textContent = item.url
-        infoPokemon.querySelector('button').dataset.id = index + 1
+        infoPokemon.querySelector('button').dataset.id =i != -1 ? i : index + 1
 
         const clone = infoPokemon.cloneNode(true)
         fragment.appendChild(clone)
     })
     lista.appendChild(fragment)
 
+}
+
+const buscaPorNombre = () => {
+    const busca = document.getElementById('buscaNombre').value
+    //console.log('data', busca)
+    const resultado=pokemones.find(obj =>{
+        //console.log(obj)
+        if(obj.name===busca){
+            return obj
+        }
+       
+    })
+   // console.log('resultado',resultado)
+   if(resultado){
+    let poke=[]
+    poke.push(resultado)
+    pintarPokemones(poke)
+   }else{
+    pintarPokemones()
+   }
 }
